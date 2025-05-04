@@ -1,0 +1,32 @@
+Bloco: 100.000 linhas por vez:
+AAED\Algs\Seminario01> py.exe .\fileGenerator.py
+Arquivo com 21.206.987 linhas (200MB)
+
+AAED\Algs\Seminario01> py.exe .\externalQuicksort.py
+Ordenação concluída em 405.29 segundos.
+
+AAED\Algs\Seminario01> py.exe .\orderVerification.py
+Verificando ordenação das 3 regiões do arquivo...
+As 3 regiões verificadas estão ordenadas.7
+
+Bloco: 500.000 linhas por vez:
+AAED\Algs\Seminario01> py.exe .\fileGenerator.py
+Arquivo com 21.206.987 linhas (200MB)
+
+\AAED\Algs\Seminario01> py.exe .\externalQuicksort.py
+Ordenação concluída em 299.82 segundos.
+
+\AAED\Algs\Seminario01> py.exe .\orderVerification.py
+Verificando ordenação das 3 regiões do arquivo...
+As 3 regiões verificadas estão ordenadas.
+
+Bloco: 1.000.000 linhas por vez:
+AAED\Algs\Seminario01> py.exe .\fileGenerator.py
+Arquivo com 21.206.987 linhas (200MB)
+
+\AAED\Algs\Seminario01> py.exe .\externalQuicksort.py
+Ordenação concluída em 270.68 segundos.
+
+\AAED\Algs\Seminario01> py.exe .\orderVerification.py
+Verificando ordenação das 3 regiões do arquivo...
+As 3 regiões verificadas estão ordenadas.
