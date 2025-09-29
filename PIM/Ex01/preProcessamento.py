@@ -25,41 +25,61 @@ def adicionar_ruido_sal_pimenta(imagem_array, proporcao_sal=0.01, proporcao_pime
 
 def aplicar_filtro_media(imagem_array, tamanho_kernel=3):
     borda = tamanho_kernel // 2
-    imagem_preenchida = np.pad(imagem_array, pad_width=borda, mode='edge')
-    imagem_suavizada = np.zeros_like(imagem_array)
+    altura, largura = imagem_array.shape
+    imagem_suavizada = np.zeros((altura, largura), dtype=np.uint8)
 
-    for i in range(imagem_array.shape[0]):
-        for j in range(imagem_array.shape[1]):
-            regiao = imagem_preenchida[i:i+tamanho_kernel, j:j+tamanho_kernel]
-            imagem_suavizada[i, j] = np.mean(regiao)
+    for i in range(altura):
+        for j in range(largura):
+            soma = 0
+            contador = 0
+            for ki in range(-borda, borda + 1):
+                for kj in range(-borda, borda + 1):
+                    ni = min(max(i + ki, 0), altura - 1)
+                    nj = min(max(j + kj, 0), largura - 1)
+                    soma += imagem_array[ni][nj]
+                    contador += 1
+            media = round(soma / contador)
+            imagem_suavizada[i][j] = media
 
-    return imagem_suavizada.astype(np.uint8)
+    return imagem_suavizada
 
 def aplicar_filtro_mediana(imagem_array, tamanho_kernel=3):
     borda = tamanho_kernel // 2
-    imagem_preenchida = np.pad(imagem_array, pad_width=borda, mode='edge')
-    imagem_suavizada = np.zeros_like(imagem_array)
+    altura, largura = imagem_array.shape
+    imagem_suavizada = np.zeros((altura, largura), dtype=np.uint8)
 
-    for i in range(imagem_array.shape[0]):
-        for j in range(imagem_array.shape[1]):
-            regiao = imagem_preenchida[i:i+tamanho_kernel, j:j+tamanho_kernel]
-            valores = regiao.flatten()
-            imagem_suavizada[i, j] = np.median(valores)
+    for i in range(altura):
+        for j in range(largura):
+            vizinhos = []
+            for ki in range(-borda, borda + 1):
+                for kj in range(-borda, borda + 1):
+                    ni = min(max(i + ki, 0), altura - 1)
+                    nj = min(max(j + kj, 0), largura - 1)
+                    vizinhos.append(imagem_array[ni][nj])
+            vizinhos.sort()
+            mediana = vizinhos[len(vizinhos) // 2]
+            imagem_suavizada[i][j] = mediana
 
-    return imagem_suavizada.astype(np.uint8)
+    return imagem_suavizada
 
 def aplicar_filtro_minimo(imagem_array, tamanho_kernel=3):
     borda = tamanho_kernel // 2
-    imagem_preenchida = np.pad(imagem_array, pad_width=borda, mode='edge')
-    imagem_suavizada = np.zeros_like(imagem_array)
+    altura, largura = imagem_array.shape
+    imagem_suavizada = np.zeros((altura, largura), dtype=np.uint8)
 
-    for i in range(imagem_array.shape[0]):
-        for j in range(imagem_array.shape[1]):
-            regiao = imagem_preenchida[i:i+tamanho_kernel, j:j+tamanho_kernel]
-            valores = regiao.flatten()
-            imagem_suavizada[i, j] = np.min(valores)
+    for i in range(altura):
+        for j in range(largura):
+            minimo = 255
+            for ki in range(-borda, borda + 1):
+                for kj in range(-borda, borda + 1):
+                    ni = min(max(i + ki, 0), altura - 1)
+                    nj = min(max(j + kj, 0), largura - 1)
+                    valor = imagem_array[ni][nj]
+                    if valor < minimo:
+                        minimo = valor
+            imagem_suavizada[i][j] = minimo
 
-    return imagem_suavizada.astype(np.uint8)
+    return imagem_suavizada
 
 caminho_dataset = kagglehub.dataset_download("masoudnickparvar/brain-tumor-mri-dataset")
 print("Caminho para os arquivos do dataset:", caminho_dataset)
