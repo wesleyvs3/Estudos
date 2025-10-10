@@ -57,7 +57,7 @@ for nome_arquivo in os.listdir(pasta_imagens):
         imagem = Image.open(caminho_imagem).convert("L")
         imagem_array = np.array(imagem)
 
-        imagem_contrastada = aumentar_contraste(imagem_array, fator=1.6)
+        imagem_contrastada = aumentar_contraste(imagem_array, fator=1.5)
 
         limiar = calcular_limiar_mediana(imagem_contrastada)
 
